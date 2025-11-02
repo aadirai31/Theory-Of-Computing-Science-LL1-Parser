@@ -14,9 +14,11 @@ src/
 ├── LexerException.java  - Exception class for lexer errors
 ├── Parser.java          - LL(1) parser implementation
 ├── ParseException.java  - Exception class for parser errors
+├── JsonFormatter.java   - JSON output formatter for parse trees
 ├── Main.java            - Main entry point with interactive mode
 ├── LexerTest.java       - Comprehensive lexer test suite
-└── ParserTest.java      - Comprehensive parser test suite
+├── ParserTest.java      - Comprehensive parser test suite
+└── test_outputs/        - Generated JSON output files from tests
 ```
 
 ## Token Types
@@ -80,8 +82,12 @@ Token(NUMBER, '2', 1:4)
 Token(NUMBER, '3', 1:6)
 Token(RPAREN, 1:7)
 
---- Parse Tree ---
-['PLUS', 2, 3]
+--- Parse Tree (JSON) ---
+[
+  "PLUS",
+  2,
+  3
+]
 
 > exit
 ```
@@ -103,22 +109,38 @@ The parser test suite includes 24+ test cases covering all grammar productions.
 
 ### Basic Expressions
 ```lisp
-42              # NUMBER: 42
-x               # IDENTIFIER: x
-(+ 2 3)         # LPAREN, PLUS, NUMBER:2, NUMBER:3, RPAREN
+Input: 42
+JSON Output: 42
+
+Input: x
+JSON Output: "x"
+
+Input: (+ 2 3)
+JSON Output: ["PLUS", 2, 3]
 ```
 
 ### Nested Expressions
 ```lisp
-(+ (× 2 3) 4)   # Addition with nested multiplication
-(? (= x 0) 1 0) # Conditional expression
+Input: (+ (× 2 3) 4)
+JSON Output: ["PLUS", ["MULT", 2, 3], 4]
+
+Input: (? (= x 0) 1 0)
+JSON Output: ["CONDITIONAL", ["EQUALS", "x", 0], 1, 0]
 ```
 
 ### Function Expressions
 ```lisp
-(λ x x)                # Lambda (identity function)
-(≜ y 10 y)            # Let binding
-((λ x (+ x 1)) 5)     # Function application
+Input: (λ x x)
+JSON Output: ["LAMBDA", "x", "x"]
+
+Input: (≜ y 10 y)
+JSON Output: ["LET", "y", 10, "y"]
+
+Input: ((λ x (+ x 1)) 5)
+JSON Output: [["LAMBDA", "x", ["PLUS", "x", 1]], 5]
+
+Input: (f 1 2 3)
+JSON Output: ["f", 1, 2, 3]
 ```
 
 ## Features
@@ -135,7 +157,9 @@ x               # IDENTIFIER: x
 1. **LL(1) Parsing**: Implements table-driven LL(1) parsing algorithm
 2. **Parse Table**: Directly follows the computed parse table from `parsetable.md`
 3. **Parse Tree Generation**: Builds nested list representation (Part B.3)
-4. **Error Handling**: Clear error messages with line and column information
+4. **JSON Output**: Proper JSON formatting of parse trees as required by specification
+5. **Error Handling**: Clear error messages with line and column information
+6. **Test Output Files**: Automatically generates .json files for all test cases
 
 ## Implementation Details
 
@@ -182,6 +206,29 @@ The parser implements the standard **table-driven LL(1) parsing algorithm**:
      - Lambda: `['LAMBDA', param, body]`
      - Function app: `[func, arg1, arg2, ...]`
 
+### JSON Output Format
+
+The parser generates proper JSON output as specified in the assignment:
+
+- **Numbers**: Output as JSON numbers (e.g., `42`)
+- **Identifiers**: Output as JSON strings (e.g., `"x"`)
+- **Operations**: Output as JSON arrays with operator name first (e.g., `["PLUS", 2, 3]`)
+- **Nested structures**: Recursively formatted as nested JSON arrays
+
+**JSON Formatting Features**:
+- Compact format: `["PLUS",2,3]` (used in test files)
+- Pretty-print format: Multi-line with indentation (used in interactive mode)
+- Proper string escaping for special characters and Unicode
+- Valid JSON that can be parsed by any JSON parser
+
+**Example Output Files** (in `src/test_outputs/`):
+```json
+{
+  "input": "(+ 2 3)",
+  "output": ["PLUS", 2, 3]
+}
+```
+
 ### Parse Table Usage
 
 The parser directly implements the LL(1) parse table from `parsetable.md`:
@@ -225,19 +272,19 @@ Comprehensive tests for the parser (24+ test cases):
 
 1. **Basic Expressions**:
    - `42` → `42`
-   - `x` → `'x'`
-   - `(+ 2 3)` → `['PLUS', 2, 3]`
-   - `(× x 5)` → `['MULT', 'x', 5]`
+   - `x` → `"x"`
+   - `(+ 2 3)` → `["PLUS", 2, 3]`
+   - `(× x 5)` → `["MULT", "x", 5]`
 
 2. **Nested Expressions**:
-   - `(+ (× 2 3) 4)` → `['PLUS', ['MULT', 2, 3], 4]`
-   - `(? (= x 0) 1 0)` → `['CONDITIONAL', ['EQUALS', 'x', 0], 1, 0]`
+   - `(+ (× 2 3) 4)` → `["PLUS", ["MULT", 2, 3], 4]`
+   - `(? (= x 0) 1 0)` → `["CONDITIONAL", ["EQUALS", "x", 0], 1, 0]`
 
 3. **Function Expressions**:
-   - `(λ x x)` → `['LAMBDA', 'x', 'x']`
-   - `(≜ y 10 y)` → `['LET', 'y', 10, 'y']`
-   - `((λ x (+ x 1)) 5)` → `[['LAMBDA', 'x', ['PLUS', 'x', 1]], 5]`
-   - `(f 1 2 3)` → `['f', 1, 2, 3]` (function application)
+   - `(λ x x)` → `["LAMBDA", "x", "x"]`
+   - `(≜ y 10 y)` → `["LET", "y", 10, "y"]`
+   - `((λ x (+ x 1)) 5)` → `[["LAMBDA", "x", ["PLUS", "x", 1]], 5]`
+   - `(f 1 2 3)` → `["f", 1, 2, 3]` (function application)
 
 4. **Error Cases**:
    - Missing closing parenthesis
@@ -310,8 +357,10 @@ This implementation satisfies the following requirements:
 ### What's Included
 
 - ✅ Full lexer implementation with Unicode support
-- ✅ LL(1) parser based on parse table from `parsetable.md`
+- ✅ Table-driven LL(1) parser based on parse table from `parsetable.md`
 - ✅ Parse tree generation in nested list format
+- ✅ **JSON output formatting** (compact and pretty-print modes)
+- ✅ **Automatic generation of .json test output files**
 - ✅ Interactive REPL mode
 - ✅ Comprehensive test suites (24+ parser tests, 20+ lexer tests)
 - ✅ Error handling with line/column information

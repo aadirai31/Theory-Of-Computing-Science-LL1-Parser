@@ -3,7 +3,8 @@
     "allow": [
       "Bash(dir /b:*)",
       "Bash(javac:*)",
-      "Bash(java:*)"
+      "Bash(java:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
