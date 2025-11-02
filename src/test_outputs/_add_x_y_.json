@@ -1,4 +1,0 @@
-{
-  "input": "(add x y)",
-  "output": ["add","x","y"]
-}
