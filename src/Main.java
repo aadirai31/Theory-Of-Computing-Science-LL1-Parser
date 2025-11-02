@@ -1,14 +1,6 @@
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Main entry point for the MiniLisp LL(1) Parser.
- *
- * This implementation includes:
- * - Lexer: Tokenizes MiniLisp source code according to specification
- * - Parser: Table-driven LL(1) parser (to be implemented)
- * - Parse Tree Generator: Outputs parse trees in nested list format
- */
 public class Main {
     public static void main(String[] args) {
         System.out.println("=== MiniLisp LL(1) Parser ===\n");
@@ -17,14 +9,10 @@ public class Main {
             String input = args[0];
             processInput(input);
         } else {
-            // Interactive mode
             runInteractiveMode();
         }
     }
 
-    /**
-     * Runs the parser in interactive mode, allowing multiple inputs.
-     */
     private static void runInteractiveMode() {
         System.out.println("Interactive Mode - Enter MiniLisp expressions");
         System.out.println("Commands: 'exit' to quit, 'help' for examples\n");
@@ -54,12 +42,8 @@ public class Main {
         }
     }
 
-    /**
-     * Processes a single input string through the lexer and parser.
-     */
     private static void processInput(String input) {
         try {
-            // Step 1: Lexical Analysis
             System.out.println("Input: " + input);
             Lexer lexer = new Lexer(input);
             List<Token> tokens = lexer.tokenize();
@@ -71,7 +55,6 @@ public class Main {
                 }
             }
 
-            // Step 2: Parsing
             Parser parser = new Parser(tokens);
             Object parseTree = parser.parse();
 
@@ -88,9 +71,6 @@ public class Main {
         }
     }
 
-    /**
-     * Prints help information with example expressions.
-     */
     private static void printHelp() {
         System.out.println("\n=== MiniLisp Examples ===\n");
 

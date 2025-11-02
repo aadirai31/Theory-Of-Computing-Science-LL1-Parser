@@ -1,29 +1,11 @@
 import java.util.List;
 
-/**
- * Utility class for converting parse trees to JSON format.
- * Handles nested lists, strings, and numbers according to JSON specification.
- */
 public class JsonFormatter {
 
-    /**
-     * Converts a parse tree object to a formatted JSON string.
-     *
-     * @param tree The parse tree (Integer, String, or List<Object>)
-     * @return JSON string representation
-     */
     public static String toJson(Object tree) {
         return toJson(tree, 0, false);
     }
 
-    /**
-     * Converts a parse tree object to a formatted JSON string with indentation.
-     *
-     * @param tree The parse tree (Integer, String, or List<Object>)
-     * @param indent Current indentation level
-     * @param pretty Whether to use pretty printing with newlines and indentation
-     * @return JSON string representation
-     */
     private static String toJson(Object tree, int indent, boolean pretty) {
         if (tree == null) {
             return "null";
@@ -40,9 +22,6 @@ public class JsonFormatter {
         }
     }
 
-    /**
-     * Converts a list to JSON array format.
-     */
     private static String listToJson(List<Object> list, int indent, boolean pretty) {
         if (list.isEmpty()) {
             return "[]";
@@ -79,19 +58,12 @@ public class JsonFormatter {
         return sb.toString();
     }
 
-    /**
-     * Appends indentation spaces to a StringBuilder.
-     */
     private static void appendIndent(StringBuilder sb, int indent) {
         for (int i = 0; i < indent * 2; i++) {
             sb.append(' ');
         }
     }
 
-    /**
-     * Escapes a string for JSON format.
-     * Handles special characters: ", \, /, \b, \f, \n, \r, \t
-     */
     private static String escapeJsonString(String str) {
         StringBuilder sb = new StringBuilder();
         sb.append("\"");
@@ -125,7 +97,6 @@ public class JsonFormatter {
                     break;
                 default:
                     if (c < 0x20 || c > 0x7E) {
-                        // Escape non-printable characters
                         sb.append(String.format("\\u%04x", (int) c));
                     } else {
                         sb.append(c);
@@ -137,9 +108,6 @@ public class JsonFormatter {
         return sb.toString();
     }
 
-    /**
-     * Converts a parse tree to pretty-printed JSON with indentation.
-     */
     public static String toPrettyJson(Object tree) {
         return toJson(tree, 0, true);
     }
