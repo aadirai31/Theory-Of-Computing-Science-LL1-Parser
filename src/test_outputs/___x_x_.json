@@ -1,0 +1,4 @@
+{
+  "input": "(\u03bb x x)",
+  "output": ["LAMBDA","x","x"]
+}
