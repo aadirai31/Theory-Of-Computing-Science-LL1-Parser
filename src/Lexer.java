@@ -9,7 +9,8 @@ import java.util.List;
  * - Operators: +, −(U+2212), ×, =, ?, λ, ≜
  * - Delimiters: (, )
  *
- * CRITICAL: The MINUS token is Unicode U+2212 (−), NOT the ASCII dash U+002D (-)
+ * CRITICAL: The MINUS token is Unicode U+2212 (−), NOT the ASCII dash U+002D
+ * (-)
  */
 public class Lexer {
     private final String input;
@@ -18,10 +19,10 @@ public class Lexer {
     private int column;
 
     // Unicode constants for clarity
-    private static final char UNICODE_MINUS = '\u2212';  // − (U+2212)
-    private static final char UNICODE_MULT = '\u00D7';   // × (U+00D7)
+    private static final char UNICODE_MINUS = '\u2212'; // − (U+2212)
+    private static final char UNICODE_MULT = '\u00D7'; // × (U+00D7)
     private static final char UNICODE_LAMBDA = '\u03BB'; // λ (U+03BB)
-    private static final char UNICODE_LET = '\u225C';    // ≜ (U+225C)
+    private static final char UNICODE_LET = '\u225C'; // ≜ (U+225C)
 
     public Lexer(String input) {
         this.input = input;
@@ -38,7 +39,8 @@ public class Lexer {
 
         while (!isAtEnd()) {
             skipWhitespace();
-            if (isAtEnd()) break;
+            if (isAtEnd())
+                break;
 
             Token token = nextToken();
             tokens.add(token);
@@ -64,11 +66,11 @@ public class Lexer {
                 advance();
                 return new Token(TokenType.PLUS, tokenLine, tokenColumn);
 
-            case UNICODE_MINUS:  // − (U+2212)
+            case UNICODE_MINUS: // − (U+2212)
                 advance();
                 return new Token(TokenType.MINUS, tokenLine, tokenColumn);
 
-            case UNICODE_MULT:   // × (U+00D7)
+            case UNICODE_MULT: // × (U+00D7)
                 advance();
                 return new Token(TokenType.MULT, tokenLine, tokenColumn);
 
@@ -84,7 +86,7 @@ public class Lexer {
                 advance();
                 return new Token(TokenType.LAMBDA, tokenLine, tokenColumn);
 
-            case UNICODE_LET:    // ≜ (U+225C)
+            case UNICODE_LET: // ≜ (U+225C)
                 advance();
                 return new Token(TokenType.LET, tokenLine, tokenColumn);
 
@@ -108,29 +110,33 @@ public class Lexer {
         }
 
         // Special error message for common Unicode mistake
-        if (current == '-') {  // ASCII dash U+002D
+        if (current == '-') { // ASCII dash U+002D
             throw new LexerException(
                     String.format("Invalid character '-' (ASCII dash U+002D) at line %d, column %d. " +
                             "Did you mean '−' (Unicode minus U+2212)?",
-                            line, column)
-            );
+                            line, column));
         }
 
         // Unrecognized character
         throw new LexerException(
                 String.format("Unexpected character '%c' at line %d, column %d",
-                        current, line, column)
-        );
+                        current, line, column));
     }
 
     /**
      * Scans a NUMBER token: [0-9]+
      */
-    private Token scanNumber(int tokenLine, int tokenColumn) {
+    private Token scanNumber(int tokenLine, int tokenColumn) throws LexerException {
         StringBuilder number = new StringBuilder();
 
         while (!isAtEnd() && isDigit(peek())) {
             number.append(advance());
+        }
+
+        if (isAlpha(peek())) {
+            throw new LexerException(
+                    String.format("Invalid character '%c' in number at line %d, column %d",
+                            peek(), line, column));
         }
 
         return new Token(TokenType.NUMBER, number.toString(), tokenLine, tokenColumn);
@@ -180,7 +186,8 @@ public class Lexer {
      * Returns the current character without consuming it.
      */
     private char peek() {
-        if (isAtEnd()) return '\0';
+        if (isAtEnd())
+            return '\0';
         return input.charAt(position);
     }
 
