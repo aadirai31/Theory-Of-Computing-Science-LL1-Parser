@@ -8,20 +8,21 @@ This is a complete LL(1) parser implementation for the MiniLisp language as spec
 
 ```
 ├── src/
-│   ├── Token.java           - Token class representing a single token
-│   ├── TokenType.java       - Enumeration of all token types
-│   ├── Lexer.java           - Lexer implementation (tokenizer)
-│   ├── LexerException.java  - Exception class for lexer errors
-│   ├── Parser.java          - LL(1) parser implementation
-│   ├── ParseException.java  - Exception class for parser errors
-│   ├── JsonFormatter.java   - JSON output formatter for parse trees
-│   ├── Main.java            - Main entry point with interactive mode
-│   ├── LexerTest.java       - Comprehensive lexer test suite
-│   ├── ParserTest.java      - Comprehensive parser test suite
-│   └── test_outputs/        - Generated JSON output files from tests
-├── parsetable.md            - LL(1) parse table used by parser
-├── TESTING_JUSTIFICATION.md - Test design rationale and coverage analysis
-└── README.md                - This file
+│   ├── Token.java              - Token class representing a single token
+│   ├── TokenType.java          - Enumeration of all token types
+│   ├── Lexer.java              - Lexer implementation (tokenizer)
+│   ├── LexerException.java     - Exception class for lexer errors
+│   ├── Parser.java             - LL(1) parser implementation
+│   ├── ParseException.java     - Exception class for parser errors
+│   ├── JsonFormatter.java      - JSON output formatter for parse trees
+│   ├── Main.java               - Main entry point with interactive mode
+│   ├── LexerTest.java          - Comprehensive lexer test suite
+│   ├── ParserTest.java         - Comprehensive parser test suite
+│   └── test_outputs/           - Generated JSON output files from tests
+├── parsetable.md               - LL(1) parse table used by parser
+├── TESTING_JUSTIFICATION.md    - Test design rationale and coverage analysis
+├── IMPLEMENTATION_JUSTIFICATION.md - Design decisions for lexer and parser
+└── README.md                   - This file
 ```
 
 ## Token Types
@@ -413,6 +414,7 @@ git push -u origin lexer-implementation
 - **Assignment Specification**: See `spec.md`
 - **Parse Table**: See `parsetable.md` (used by the parser implementation)
 - **Testing Justification**: See `TESTING_JUSTIFICATION.md` (comprehensive coverage analysis and rationale)
+- **Implementation Justification**: See `IMPLEMENTATION_JUSTIFICATION.md` (detailed rationale for major design decisions)
 
 ## Author Notes
 
@@ -428,7 +430,9 @@ This implementation:
 
 The code is designed to be clear and educational, prioritizing readability and correctness over performance optimization (as suggested in the assignment requirements).
 
-### Parser Design Decisions
+For detailed justification of all major design decisions, see **[IMPLEMENTATION_JUSTIFICATION.md](IMPLEMENTATION_JUSTIFICATION.md)**.
+
+### Parser Design Decisions (Summary)
 
 1. **Table-Driven Approach**: Uses explicit parse table with stack-based algorithm (as required by the specification)
 2. **Explicit Parse Table**: `Map<String, Production>` stores all (NonTerminal, Terminal) → Production mappings
@@ -439,3 +443,5 @@ The code is designed to be clear and educational, prioritizing readability and c
 5. **Error Messages**: Provides line and column information for all errors
 6. **Semantic Actions**: Embedded in production RHS to build tree nodes at the right time
 7. **Function Application**: Special handling for `<expr>*` (zero or more expressions) using a helper method
+
+See [IMPLEMENTATION_JUSTIFICATION.md](IMPLEMENTATION_JUSTIFICATION.md) for complete rationale behind lexer and parser design decisions.
