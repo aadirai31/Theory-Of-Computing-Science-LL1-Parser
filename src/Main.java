@@ -77,17 +77,45 @@ public class Main {
                 }
             }
 
-            // Step 2: Parsing (to be implemented)
-            // Parser parser = new Parser(tokens);
-            // ParseTree tree = parser.parse();
-            // System.out.println("\n--- Parse Tree ---");
-            // System.out.println(tree.toJson());
+            // Step 2: Parsing
+            Parser parser = new Parser(tokens);
+            Object parseTree = parser.parse();
+
+            System.out.println("\n--- Parse Tree ---");
+            System.out.println(formatParseTree(parseTree));
 
         } catch (LexerException e) {
             System.err.println("Lexer Error: " + e.getMessage());
+        } catch (ParseException e) {
+            System.err.println("Parse Error: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Formats a parse tree object into a string representation.
+     * Matches the format from the spec: ['PLUS', 2, 3]
+     */
+    private static String formatParseTree(Object tree) {
+        if (tree instanceof Integer) {
+            return tree.toString();
+        } else if (tree instanceof String) {
+            return "'" + tree + "'";
+        } else if (tree instanceof List) {
+            @SuppressWarnings("unchecked")
+            List<Object> list = (List<Object>) tree;
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            for (int i = 0; i < list.size(); i++) {
+                if (i > 0) sb.append(", ");
+                sb.append(formatParseTree(list.get(i)));
+            }
+            sb.append("]");
+            return sb.toString();
+        } else {
+            return tree.toString();
         }
     }
 
