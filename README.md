@@ -7,18 +7,21 @@ This is a complete LL(1) parser implementation for the MiniLisp language as spec
 ## Project Structure
 
 ```
-src/
-├── Token.java           - Token class representing a single token
-├── TokenType.java       - Enumeration of all token types
-├── Lexer.java           - Lexer implementation (tokenizer)
-├── LexerException.java  - Exception class for lexer errors
-├── Parser.java          - LL(1) parser implementation
-├── ParseException.java  - Exception class for parser errors
-├── JsonFormatter.java   - JSON output formatter for parse trees
-├── Main.java            - Main entry point with interactive mode
-├── LexerTest.java       - Comprehensive lexer test suite
-├── ParserTest.java      - Comprehensive parser test suite
-└── test_outputs/        - Generated JSON output files from tests
+├── src/
+│   ├── Token.java           - Token class representing a single token
+│   ├── TokenType.java       - Enumeration of all token types
+│   ├── Lexer.java           - Lexer implementation (tokenizer)
+│   ├── LexerException.java  - Exception class for lexer errors
+│   ├── Parser.java          - LL(1) parser implementation
+│   ├── ParseException.java  - Exception class for parser errors
+│   ├── JsonFormatter.java   - JSON output formatter for parse trees
+│   ├── Main.java            - Main entry point with interactive mode
+│   ├── LexerTest.java       - Comprehensive lexer test suite
+│   ├── ParserTest.java      - Comprehensive parser test suite
+│   └── test_outputs/        - Generated JSON output files from tests
+├── parsetable.md            - LL(1) parse table used by parser
+├── TESTING_JUSTIFICATION.md - Test design rationale and coverage analysis
+└── README.md                - This file
 ```
 
 ## Token Types
@@ -99,11 +102,11 @@ java Main "(+ 2 3)"
 
 ### Running Tests
 ```bash
-java LexerTest    # Run lexer tests
-java ParserTest   # Run parser tests
+java LexerTest    # 34 tests
+java ParserTest   # 33 tests
 ```
 
-The parser test suite includes 24+ test cases covering all grammar productions.
+The test suites include **67 total tests** with 100% grammar coverage and comprehensive edge case testing.
 
 ## Example Usage
 
@@ -250,6 +253,18 @@ The parser directly implements the LL(1) parse table from `parsetable.md`:
 
 ## Testing
 
+For complete testing justification, rationale, and coverage analysis, see **[TESTING_JUSTIFICATION.md](TESTING_JUSTIFICATION.md)**.
+
+### Summary
+
+- ✅ **100% grammar production coverage** (12/12 productions tested)
+- ✅ **100% non-terminal coverage** (3/3 non-terminals)
+- ✅ **100% terminal coverage** (11/11 token types)
+- ✅ **Comprehensive edge case coverage** (leading zeroes, whitespace variations)
+- ✅ **67 total automated tests** (33 parser + 34 lexer)
+- ✅ **Automated test execution** with JSON output validation
+- ✅ **28+ JSON output files** demonstrating parser behavior
+
 ### Lexer Tests (`LexerTest.java`)
 
 Comprehensive tests for the lexer:
@@ -268,25 +283,30 @@ java LexerTest
 
 ### Parser Tests (`ParserTest.java`)
 
-Comprehensive tests for the parser (24+ test cases):
+Comprehensive tests for the parser (33 test cases):
 
-1. **Basic Expressions**:
+1. **Basic Expressions** (6 tests):
    - `42` → `42`
    - `x` → `"x"`
    - `(+ 2 3)` → `["PLUS", 2, 3]`
    - `(× x 5)` → `["MULT", "x", 5]`
 
-2. **Nested Expressions**:
+2. **Edge Cases** (9 tests):
+   - Leading zeroes: `042` → `42`, `007` → `7`
+   - Whitespace: `(+    2    3)`, `  (+ 2 3)  `
+   - Mixed whitespace (tabs and spaces)
+
+3. **Nested Expressions** (5 tests):
    - `(+ (× 2 3) 4)` → `["PLUS", ["MULT", 2, 3], 4]`
    - `(? (= x 0) 1 0)` → `["CONDITIONAL", ["EQUALS", "x", 0], 1, 0]`
 
-3. **Function Expressions**:
+4. **Function Expressions** (8 tests):
    - `(λ x x)` → `["LAMBDA", "x", "x"]`
    - `(≜ y 10 y)` → `["LET", "y", 10, "y"]`
    - `((λ x (+ x 1)) 5)` → `[["LAMBDA", "x", ["PLUS", "x", 1]], 5]`
    - `(f 1 2 3)` → `["f", 1, 2, 3]` (function application)
 
-4. **Error Cases**:
+5. **Error Cases** (5 tests):
    - Missing closing parenthesis
    - Unmatched parenthesis
    - Invalid expressions
@@ -391,9 +411,8 @@ git push -u origin lexer-implementation
 ## Resources
 
 - **Assignment Specification**: See `spec.md`
-- **FIRST/FOLLOW Sets**: See `FIRST_sets_analysis.md` and `FOLLOW_sets_analysis.md`
-- **Parse Table**: See `LL1_parse_table.md`
-- **Conflict Resolution**: See `conflict_resolution_analysis.md`
+- **Parse Table**: See `parsetable.md` (used by the parser implementation)
+- **Testing Justification**: See `TESTING_JUSTIFICATION.md` (comprehensive coverage analysis and rationale)
 
 ## Author Notes
 

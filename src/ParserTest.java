@@ -23,6 +23,9 @@ public class ParserTest {
         // Basic expressions (from spec C.1)
         testBasicExpressions();
 
+        // Edge cases (leading zeroes, whitespace variations)
+        testEdgeCases();
+
         // Nested expressions
         testNestedExpressions();
 
@@ -68,6 +71,27 @@ public class ParserTest {
         test("(× x 5)", "[\"MULT\",\"x\",5]");
         test("(= 10 20)", "[\"EQUALS\",10,20]");
         test("(− 100 50)", "[\"MINUS\",100,50]");
+    }
+
+    private static void testEdgeCases() {
+        System.out.println("\n--- Testing Edge Cases ---");
+
+        // Leading zeroes in numbers
+        test("042", "42");
+        test("007", "7");
+        test("00000", "0");
+        test("(+ 007 042)", "[\"PLUS\",7,42]");
+
+        // Multiple consecutive spaces
+        test("(+    2    3)", "[\"PLUS\",2,3]");
+        test("(×     x     5)", "[\"MULT\",\"x\",5]");
+
+        // Leading and trailing whitespace
+        test("  42  ", "42");
+        test("  (+ 2 3)  ", "[\"PLUS\",2,3]");
+
+        // Mixed whitespace (spaces and tabs)
+        test("(+\t\t2\t\t3)", "[\"PLUS\",2,3]");
     }
 
     private static void testNestedExpressions() {
