@@ -1,0 +1,8 @@
+{
+  "input": "()",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

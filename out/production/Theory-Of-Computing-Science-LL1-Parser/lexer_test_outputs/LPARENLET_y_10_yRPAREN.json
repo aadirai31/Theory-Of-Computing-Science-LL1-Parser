@@ -1,0 +1,12 @@
+{
+  "input": "(\u225c y 10 y)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "LET", "value": null },
+    { "type": "IDENTIFIER", "value": "y" },
+    { "type": "NUMBER", "value": "10" },
+    { "type": "IDENTIFIER", "value": "y" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

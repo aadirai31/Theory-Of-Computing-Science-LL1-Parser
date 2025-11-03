@@ -1,0 +1,18 @@
+{
+  "input": "((\u03bb x (+ x 1)) 5)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "LPAREN", "value": null },
+    { "type": "LAMBDA", "value": null },
+    { "type": "IDENTIFIER", "value": "x" },
+    { "type": "LPAREN", "value": null },
+    { "type": "PLUS", "value": null },
+    { "type": "IDENTIFIER", "value": "x" },
+    { "type": "NUMBER", "value": "1" },
+    { "type": "RPAREN", "value": null },
+    { "type": "RPAREN", "value": null },
+    { "type": "NUMBER", "value": "5" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

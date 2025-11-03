@@ -1,0 +1,4 @@
+{
+  "input": "(\u00d7     x     5)",
+  "output": ["MULT","x",5]
+}

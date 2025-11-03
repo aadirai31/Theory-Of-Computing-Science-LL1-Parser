@@ -1,0 +1,11 @@
+{
+  "input": "(\u00d7 x 5)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "MULT", "value": null },
+    { "type": "IDENTIFIER", "value": "x" },
+    { "type": "NUMBER", "value": "5" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

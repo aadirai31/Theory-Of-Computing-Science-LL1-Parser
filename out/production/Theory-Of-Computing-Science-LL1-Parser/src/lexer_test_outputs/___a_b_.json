@@ -1,0 +1,11 @@
+{
+  "input": "(= a b)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "EQUALS", "value": null },
+    { "type": "IDENTIFIER", "value": "a" },
+    { "type": "IDENTIFIER", "value": "b" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

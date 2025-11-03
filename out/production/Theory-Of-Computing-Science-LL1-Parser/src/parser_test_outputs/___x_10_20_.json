@@ -1,0 +1,4 @@
+{
+  "input": "(? x 10 20)",
+  "output": ["CONDITIONAL","x",10,20]
+}

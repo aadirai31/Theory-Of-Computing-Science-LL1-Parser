@@ -1,0 +1,7 @@
+{
+  "input": "\u00d7",
+  "tokens": [
+    { "type": "MULT", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "input": "x",
+  "tokens": [
+    { "type": "IDENTIFIER", "value": "x" },
+    { "type": "EOF", "value": null }
+  ]
+}
