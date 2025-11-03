@@ -48,6 +48,22 @@ public class LexerTest {
                 new ExpectedToken(TokenType.NUMBER, "999"),
                 new ExpectedToken(TokenType.EOF, null));
 
+        // Leading zeroes (edge case)
+        testTokenize("042",
+                new ExpectedToken(TokenType.NUMBER, "042"),
+                new ExpectedToken(TokenType.EOF, null)
+        );
+
+        testTokenize("007",
+                new ExpectedToken(TokenType.NUMBER, "007"),
+                new ExpectedToken(TokenType.EOF, null)
+        );
+
+        testTokenize("00000",
+                new ExpectedToken(TokenType.NUMBER, "00000"),
+                new ExpectedToken(TokenType.EOF, null)
+        );
+
         System.out.println();
     }
 
