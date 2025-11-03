@@ -1,4 +1,0 @@
-{
-  "input": "(? (= x 0) 1 0)",
-  "output": ["CONDITIONAL",["EQUALS","x",0],1,0]
-}

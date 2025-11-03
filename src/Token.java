@@ -1,23 +1,14 @@
-/**
- * Represents a token in the MiniLisp language.
- * Each token has a type and an optional value (for NUMBER and IDENTIFIER tokens).
- */
+
 public class Token {
     private final TokenType type;
     private final String value;
     private final int line;
     private final int column;
 
-    /**
-     * Constructs a token without a value (for operators and keywords).
-     */
     public Token(TokenType type, int line, int column) {
         this(type, null, line, column);
     }
 
-    /**
-     * Constructs a token with a value (for NUMBER and IDENTIFIER).
-     */
     public Token(TokenType type, String value, int line, int column) {
         this.type = type;
         this.value = value;
@@ -51,8 +42,10 @@ public class Token {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Token)) return false;
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Token))
+            return false;
         Token other = (Token) obj;
         return type == other.type &&
                 (value == null ? other.value == null : value.equals(other.value));
