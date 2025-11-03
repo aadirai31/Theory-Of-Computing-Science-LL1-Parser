@@ -1,0 +1,11 @@
+{
+  "input": "(\t+\t2\t3\t)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "PLUS", "value": null },
+    { "type": "NUMBER", "value": "2" },
+    { "type": "NUMBER", "value": "3" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

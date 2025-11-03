@@ -1,0 +1,7 @@
+{
+  "input": "\u03bb",
+  "tokens": [
+    { "type": "LAMBDA", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "input": "+",
+  "tokens": [
+    { "type": "PLUS", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

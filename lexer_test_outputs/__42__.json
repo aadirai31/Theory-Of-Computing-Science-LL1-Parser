@@ -1,0 +1,7 @@
+{
+  "input": "  42  ",
+  "tokens": [
+    { "type": "NUMBER", "value": "42" },
+    { "type": "EOF", "value": null }
+  ]
+}

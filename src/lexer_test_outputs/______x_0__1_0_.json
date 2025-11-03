@@ -1,0 +1,16 @@
+{
+  "input": "(? (= x 0) 1 0)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "CONDITIONAL", "value": null },
+    { "type": "LPAREN", "value": null },
+    { "type": "EQUALS", "value": null },
+    { "type": "IDENTIFIER", "value": "x" },
+    { "type": "NUMBER", "value": "0" },
+    { "type": "RPAREN", "value": null },
+    { "type": "NUMBER", "value": "1" },
+    { "type": "NUMBER", "value": "0" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

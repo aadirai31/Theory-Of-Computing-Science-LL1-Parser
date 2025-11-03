@@ -1,0 +1,11 @@
+{
+  "input": "(+\n  2\n  3)",
+  "tokens": [
+    { "type": "LPAREN", "value": null },
+    { "type": "PLUS", "value": null },
+    { "type": "NUMBER", "value": "2" },
+    { "type": "NUMBER", "value": "3" },
+    { "type": "RPAREN", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

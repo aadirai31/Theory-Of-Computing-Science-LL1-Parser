@@ -1,0 +1,7 @@
+{
+  "input": "\u225c",
+  "tokens": [
+    { "type": "LET", "value": null },
+    { "type": "EOF", "value": null }
+  ]
+}

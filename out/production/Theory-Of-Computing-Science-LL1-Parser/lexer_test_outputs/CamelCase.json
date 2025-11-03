@@ -1,0 +1,7 @@
+{
+  "input": "CamelCase",
+  "tokens": [
+    { "type": "IDENTIFIER", "value": "CamelCase" },
+    { "type": "EOF", "value": null }
+  ]
+}

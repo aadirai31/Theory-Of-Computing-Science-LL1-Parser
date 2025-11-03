@@ -334,11 +334,67 @@ public class LexerTest {
     }
 
     private static String generateFilename(String input) {
-        String safe = input.replaceAll("[^a-zA-Z0-9]", "_");
-        if (safe.length() > 30) {
-            safe = safe.substring(0, 30);
+        StringBuilder safe = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            switch (c) {
+                case '+':
+                    safe.append("PLUS");
+                    break;
+                case '−': // U+2212 (Unicode minus)
+                    safe.append("MINUS");
+                    break;
+                case '×': // U+00D7 (Unicode multiply)
+                    safe.append("MULT");
+                    break;
+                case '=':
+                    safe.append("EQUALS");
+                    break;
+                case '?':
+                    safe.append("CONDITIONAL");
+                    break;
+                case 'λ': // U+03BB (Greek lambda)
+                    safe.append("LAMBDA");
+                    break;
+                case '≜': // U+225C (let)
+                    safe.append("LET");
+                    break;
+                case '(':
+                    safe.append("LPAREN");
+                    break;
+                case ')':
+                    safe.append("RPAREN");
+                    break;
+                case '-': // ASCII dash (error case)
+                    safe.append("DASH");
+                    break;
+                case '@':
+                    safe.append("AT");
+                    break;
+                case '#':
+                    safe.append("HASH");
+                    break;
+                case ' ':
+                case '\t':
+                case '\n':
+                case '\r':
+                    safe.append("_");
+                    break;
+                default:
+                    if (Character.isLetterOrDigit(c)) {
+                        safe.append(c);
+                    } else {
+                        safe.append("_");
+                    }
+                    break;
+            }
         }
-        return safe + ".json";
+
+        String result = safe.toString();
+        if (result.length() > 50) {
+            result = result.substring(0, 50);
+        }
+        return result + ".json";
     }
 
     private static void writeJsonFile(String filename, String input, List<Token> tokens) {

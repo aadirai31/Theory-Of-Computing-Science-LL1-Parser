@@ -1,0 +1,7 @@
+{
+  "input": "var123",
+  "tokens": [
+    { "type": "IDENTIFIER", "value": "var123" },
+    { "type": "EOF", "value": null }
+  ]
+}

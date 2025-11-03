@@ -1,0 +1,7 @@
+{
+  "input": "999",
+  "tokens": [
+    { "type": "NUMBER", "value": "999" },
+    { "type": "EOF", "value": null }
+  ]
+}
